@@ -12,7 +12,9 @@ import java.time.Duration;
 
 
 public class HomePage {
-WebDriver driver;
+    WebDriver driver;
+
+
     public HomePage(WebDriver driver) {
         this.driver = driver;
     }
@@ -27,18 +29,18 @@ WebDriver driver;
         WebElement pageText;
         @FindBy(how = How.CSS, using = "#botao > input")
         WebElement createAccountBtn;
-        @FindBy(how = How.CSS, using = "body > div.header > div > ul > li.header__nav-item.header__nav-item--profile > ul >" +
-                " li.header__subnav-item.header__subnav-item--info > div.header__subnav-info-email")
-        WebElement emailValidation;
+        @FindBy(how = How.CSS, using = "body > div.header > div > ul > li.header__nav-item.header__nav-item--profile > a")
+        WebElement accountCreationOk;
+
 
     public void waitAndClickOnSignUp(){
-        int timeout = 10;
+        int timeout = 30;
         new WebDriverWait(driver, Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOf(signupBtn));
         signupBtn.click();
     }
 
     public void waitAndCheckEmailField(String emailField){
-        int timeout = 10;
+        int timeout = 30;
         new WebDriverWait(driver, Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOf(emailForm));
         String expectedElement = "emailIn";
         String actualElement = emailField;
@@ -46,7 +48,7 @@ WebDriver driver;
     }
 
     public void waitAndCheckPassField(String passwordField){
-        int timeout = 10;
+        int timeout = 30;
         new WebDriverWait(driver, Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOf(passwordForm));
         String expectedElement = "password-field";
         String actualElement = passwordField;
@@ -55,7 +57,7 @@ WebDriver driver;
     }
 
     public void waitAndCheckText(String textForChecking){
-        int timeout = 10;
+        int timeout = 30;
         new WebDriverWait(driver, Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOf(pageText));
         String expectedElement = "Crie sua conta e Jogue Grátis!";
         String actualElement = textForChecking;
@@ -64,28 +66,27 @@ WebDriver driver;
     }
 
     public void waitAndTypeEmail(){
-        int timeout = 10;
+        int timeout = 30;
         new WebDriverWait(driver, Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOf(emailForm));
         emailForm.sendKeys("emaildeteste@testemail.com");
     }
 
     public void waitAndTypePass(){
-        int timeout = 10;
+        int timeout = 30;
         new WebDriverWait(driver, Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOf(passwordForm));
         passwordForm.sendKeys("abc123def456");
     }
 
     public void waitAndClickCreateAccount() {
-        int timeout = 10;
+        int timeout = 30;
         new WebDriverWait(driver, Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOf(createAccountBtn));
         createAccountBtn.click();
     }
 
     public void waitAndCheckAccountCreation(){
         int timeout = 30;
-        new WebDriverWait(driver, Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOf(emailValidation));
-        System.out.println(emailValidation.getText());
-        Assert.assertTrue(emailValidation.getText().contains("emaildeteste@testemail.com"));
+        new WebDriverWait(driver, Duration.ofSeconds(timeout)).until(ExpectedConditions.visibilityOf(accountCreationOk));
+        Assert.assertTrue(accountCreationOk.isDisplayed());
         driver.quit();
     }
 
